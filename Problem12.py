@@ -19,17 +19,18 @@ def prime_factorial(number, lst):
             return num_prime_divisors
 
 def primes_list():
-    primes = []
-    for x in sieveOfEra():
-        if len(primes) < 1500:
-            primes.append(x)
+    """Generator for a list of first 1500 prime numbers"""
+    it = sieveOfEra
+    cnt = 0
+    for x in it:
+        if cnt < 1500:
+            cnt += 1
+            yield x
         else:
             break
-    return primes
 
 def tri_num_factor(n):
     """Find the first triangle number with n divisors."""
-    primes = primes_list()
     k = 2
     DN = 2
     DN1 = 2
@@ -37,9 +38,9 @@ def tri_num_factor(n):
 
     while count < 500:
         if k % 2 == 0:
-            DN = prime_factorial(k + 1, primes)
+            DN = prime_factorial(k + 1, primes_list())
         else:
-            DN1 = prime_factorial((k + 1) / 2, primes)
+            DN1 = prime_factorial((k + 1) / 2, primes_list())
         count = DN * DN1
         k += 1
 
